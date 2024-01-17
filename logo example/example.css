@@ -1,0 +1,21 @@
+/* style.css */
+
+.logo-container {
+    position: relative;
+    width: 200px; /* Adjust as needed */
+    height: 200px; /* Adjust as needed */
+}
+
+#qr-code {
+    position: absolute;
+    width: 100%; /* Adjust the size of QR code */
+    height: auto;
+    opacity: 0;
+    transition: opacity 5s, transform 5s;
+}
+
+#logo-text {
+    position: absolute;
+    font-size: 24px; /* Adjust as needed */
+    transition: opacity 5s;
+}
