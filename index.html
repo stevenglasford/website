@@ -1,67 +1,69 @@
 <!-- This is a temporary index page for doing demographic research
         Please see https://github.com/stevenglasford/demographic-bike-research
         for more information -->
-<!DOCTYPE html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demographic Street Research</title>
-</head>
-<body>
-    <h1>Demographic street research</h1>
-    <button onclick="recordClick('White Person')">White Person</button>
-    <button onclick="recordClick('Black Person')">Black Person</button>
-    <button onclick="recordClick('Asian Person')">Asian Person</button>
-    <button onclick="recordClick('Other race Person')">Other race person</button>
-    <button onclick="recordClick('White Person')">Bus White Person</button>
-    <button onclick="recordClick('Black Person')">Bus Black Person</button>
-    <button onclick="recordClick('Asian Person')">Bus Asian Person</button>
-    <button onclick="recordClick('Other race Person')">Bus Other race person</button>
-
-
-    <br><br>
-    <button onclick="downloadCSV()">Download CSV, please clear browser after each trip</button>
-
-    <script>
-        let clicks = [];
-
-        function recordClick(buttonName) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const timeStamp = new Date().toLocaleString();
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    clicks.push({
-                        time: timeStamp,
-                        button: buttonName,
-                        latitude: latitude,
-                        longitude: longitude
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Demographic Street Research</title>
+        </head>
+        <body>
+            <h1>Demographic street research</h1>
+            <button onclick="recordClick('White Person')">White Person</button>
+            <button onclick="recordClick('Black Person')">Black Person</button>
+            <button onclick="recordClick('Asian Person')">Asian Person</button>
+            <button onclick="recordClick('Other race Person')">Other race person</button>
+            <br><br>
+            <button onclick="recordClick('White Person')">Bus White Person</button>
+            <button onclick="recordClick('Black Person')">Bus Black Person</button>
+            <button onclick="recordClick('Asian Person')">Bus Asian Person</button>
+            <button onclick="recordClick('Other race Person')">Bus Other race person</button>
+        
+        
+            <br><br>
+            <button onclick="downloadCSV()">Download CSV, please clear browser after each trip</button>
+        
+            <script>
+                let clicks = [];
+        
+                function recordClick(buttonName) {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition((position) => {
+                            const now = new Date();
+                            const timeStamp = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+                            const latitude = position.coords.latitude;
+                            const longitude = position.coords.longitude;
+                            clicks.push({
+                                time: timeStamp,
+                                button: buttonName,
+                                latitude: latitude,
+                                longitude: longitude
+                            });
+                            console.log(`Recorded: ${buttonName} at ${timeStamp} with coordinates (${latitude}, ${longitude})`);
+                        }, (error) => {
+                            alert("Unable to retrieve your location");
+                        });
+                    } else {
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                }
+        
+                function downloadCSV() {
+                    const now = new Date();
+                    const fileName = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}.csv`;
+                    let csvContent = "data:text/csv;charset=utf-8,Time,Latitude,Longitude,Button\n";
+                    clicks.forEach(click => {
+                        csvContent += `${click.time},${click.latitude},${click.longitude},${click.button}\n`;
                     });
-                    console.log(`Recorded: ${buttonName} at ${timeStamp} with coordinates (${latitude}, ${longitude})`);
-                }, (error) => {
-                    alert("Unable to retrieve your location");
-                });
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
-
-        function downloadCSV() {
-            const now = new Date();
-            const fileName = `${now.toLocaleDateString()}_${now.toLocaleTimeString().replace(/:/g, '-')}.csv`;
-            let csvContent = "data:text/csv;charset=utf-8,Time,Latitude,Longitude,Button\n";
-            clicks.forEach(click => {
-                csvContent += `${click.time},${click.latitude},${click.longitude},${click.button}\n`;
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", fileName);
-            document.body.appendChild(link);
-            link.click();
-        }
-    </script>
-</body>
-</html>
+        
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", fileName);
+                    document.body.appendChild(link);
+                    link.click();
+                }
+            </script>
+        </body>
+        </html>
