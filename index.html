@@ -1,305 +1,60 @@
+<!-- This is a temporary index page for doing demographic research
+        Please see https://github.com/stevenglasford/demographic-bike-research
+        for more information -->
 <!DOCTYPE html>
-<html>
-    <head></head>
-        <title> glasford.io </title>
-        <link rel="icon" type="image/x-icon" href="G.ino">
-    </head>    
-    
-    <body>
-        <img src="logo.png" width="169" height="169" alt="QR code for glasford.io this is glasford.io's logo" style="float:left">
-        <h1>Welcome to glasford.io</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Click Logger</title>
+</head>
+<body>
+    <h1>Button Click Logger</h1>
+    <button onclick="recordClick('Button 1')">Button 1</button>
+    <button onclick="recordClick('Button 2')">Button 2</button>
+    <button onclick="recordClick('Button 3')">Button 3</button>
+    <br><br>
+    <button onclick="downloadCSV()">Download CSV</button>
 
-        <p>
-            glasford.io is currently under construction. But please allow for a quick introduction.
-        </p>
+    <script>
+        let clicks = [];
 
-        <p> Glasford.io is a General Benefit Corporation based in Minneapolis, MN. 
-            We started making 3d printed fully recyclable plant based furniture in February, 2023.
-            We eventually moved on, and while we can still make the furniture, our products have morphed and our company created ULTRA.
-            Ultra was a created from a fever dream our founder Steven Glasford had while he was biking from Minneapolis to Red Lake Nation to buy some cannabis.
-            Ultra is very ultra and extreme. Steven realized that, while the ultra long distance routes on a bike are indeed difficult, they are, indeed extremely
-            efficient. 
-            The company at glasford.io has and will always be obsessed with creating a better world for the future.
-            After much thought on the 34 hours before Steven had to be rescued from Bemidji enroute to red lake nation. He decided to try and remove all of the 
-            carbon from his life. This is incredibly difficult as everything in his life, as well as most of the American supply chain is completely
-            dependent on oil to function. From the fruits from california that power Steven's hunger, to the toilet paper that wipes his ass is completely
-            dependent on oil in the form of transportation.
-        </p>
-        <p>
-            This is where Ultra was born. It is a radical project, but ultra has been extreme from the start.
-        </p>
-        
-            <p>How does it work?</p>
-        <p>
-            Were we are building a massive bike structure we can only really describe as the "mothership" which is a slow and free floating bike and trailer 
-            system designed for continuous and extremely long distances. We have different classifications for motherships as well, from orbiting stations
-            to regular routes. Orbiting stations constantly rotate around the Minneapolis-St. Paul Metro where they stay on remote and typically dirt roads.
-            The motherships do not interact with the public and great care is done to ensure that the public stays as far away from the stations as possible
-            to prevent theft and damage to both the mothership itself and its contents.
-        </p>
-        <p>
-            How does it work during the day? The mothership is constantly moving and makes a full rotation every about 4 days. Since the mothership
-            has a 4 day cycle it partitions the metro into 4 quadrants. On day 1 of the orbit, there is a fleet of bikes that are dispatched and they 
-            go out of either Minneapolis directly or they take an electric train to the city of St Paul. The bikes then are issued a day route 
-            Where they pick up and deliver items that were brought into the Head Quarters in Minneapolis. The bikes then go to standard contract 
-            assignments where they pick up larger loads with items such as food and grains and other bulk items. The bikes all 
-            intercept the mothership. The mothership then sits and allows the satelite bikes to tranfer their cargo to the mothership, as well as 
-            allowing the satelite bikes to charge their batteries. The mothership also has living quarters and a kitchen ans showers for the riders.
-            After recharging is done the bikes take their home cargo back and the mothership continues on its orbit.
-        </p>
-        <p>
-            The mothership is very large with a maximum length of 97 feet long and a standard length of 43 feet long. It is piloted by 3 people headed by 
-            a central captian who is in charge of the mothership. The mothership is also equipped with a large solar array that is used to power the 
-            mothership and the satelite bikes. The mothership has a large number of batteries. There is 3 bikes that lead the ship and they are able to 
-            be detached from each other. The mothership is also equipped with special made trailers that both assist in the braking and powering of the ship.
-            The ship has the handling of a mountain bike. 
-        </p>
-        <p>
-            There are many many more details that are left out. But this project is extremely reflective of the namesake Ultra. 
-        </p>
-        <p>
-            Using this unique system we are able to deliver cargo completely removed of the oil industry and its carbon emissions. In comparison to a tesla
-            model 3, which is able to get about 125 mpge, our system system is on average able to get between 1400-5000 mpge. 
-            This incredible amount of efficiency is due to the slow speed of the mothership and the motherships lack of oil as it is powered by the sun.
-        </p>
-        <p>
-            Furthermore, a new type of schedule managment system is implemented that allows a customer to add a delivery.
-            How does it work?:
-        </p>
-        <p>
-            Step one: customer interacts with portal system. Portal system works using email.
-            Customer sends email to portal system with object, weight and size, and destination. 
-        </p>
-        <p>    
-            Step two: System sends a confirmation email to the customer it was recieved, but sends a different email after it is scheduled.
-        </p>
-        <p>
-            step three: System closes day at 10 pm and doesn't touch the new emails until 10 pm the next day.
-        </p>
-        <p>
-            Step four: the system creates and solves a modified traveling salesman problem. The system then send the dispatch email to the 
-            mothership and the satellite bikes as well as updates the customer with a time frame that the customer should expect both the delivery 
-            pick up and drop off. If the customer is not available they have until 6 am to reject the delivery. If the customer rejects the delivery
-            it gets moved to the next day. If the customer accepts the delivery the system sends a confirmation email to the customer, the system will 
-            automatically accept any delivery that is not rejected by 6 am. A customer not available for the pick up will have their delivery
-            fees taken without a refund. 
-        </p>
-        <p>
-            Step 5: If needed the system will make transfers to other motherships.
-        </p>
-        <p>
+        function recordClick(buttonName) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const timeStamp = new Date().toLocaleString();
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    clicks.push({
+                        time: timeStamp,
+                        button: buttonName,
+                        latitude: latitude,
+                        longitude: longitude
+                    });
+                    console.log(`Recorded: ${buttonName} at ${timeStamp} with coordinates (${latitude}, ${longitude})`);
+                }, (error) => {
+                    alert("Unable to retrieve your location");
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
 
-            Update: 12-12-2023
-            Sorry if I am not going back over the previous information to fix the errors, but there are 2 types of motherships.
-            The first is the orbiting station, this one is more like a hotel rather than bike. There are about 14 trailers pulled behind that are 
-            able to be converted into 2 seats (for a max of 28 riders), then when it is time to stop there is a kitchen unit, the sitting area turns into 
-            a comfortable living space for the riders. The machine will make a single stop in the middle of the day as it gets intercepted by satelite
-            bikes needing a charge. The satelit bikes then charge from the mothership solar array. Then once all of the bikes are ready they make their
-            return routes.
-        </p>
-        <p>knife
-            There is also the agregate mothership. This is a special mother ship that forms when many satelite bikes come together.
-            They transfer their loads to the mothership and then the mothership continues with three people like normal. The agregate mothership is 
-            mostly used for ultra hauls northbound.
+        function downloadCSV() {
+            const now = new Date();
+            const fileName = `${now.toLocaleDateString()}_${now.toLocaleTimeString().replace(/:/g, '-')}.csv`;
+            let csvContent = "data:text/csv;charset=utf-8,Time,Latitude,Longitude,Button\n";
+            clicks.forEach(click => {
+                csvContent += `${click.time},${click.latitude},${click.longitude},${click.button}\n`;
+            });
 
-        </p>
-
-        <h2> 
-            As of May 22, 2023. 
-        </h2>
-        <p>    
-            It was decided to make glasford.io fully open source. This was largely due to a few reasons, but the largest reason was due 
-            to a realization by Steven that the best method to decrease the amount of carbon in the atmoshpere is to allow for all people to use
-            the models and the ideas proposed by glasford.io. 
-            
-            The biggest and most hopeful outlook is for others to try 3d printing furniture as well, and to reduce the shipping time and distance for furniture manufacturing.
-            As of May 22, 2023. The project with the most support is the "Little Table" also known as "glaslt". 
-
-            The next steps for glasford.io is to create a shopping website that is able to dynamically schedule prints across multiple printers.
-
-            glasford.io largely prints using conveyer belt printing, but the hope is to allow for the shopping website to be used with any 3d printer running octoprint.
-
-            Please stay tuned for the actual launch of the shopping webite soon, many other things must be worked out first. In particular, recently 
-            one of my printers destroyed its control board, and alternatives must be programmed.
-
-            You can visit the glasford.io main repository at 
-            <a href="https://github.com/stevenglasford/glas">glas</a>
-        </p>
-
-        <!-- <h1>Globos.us</h1>
-        <p>
-            glasford.io was created by Steven Glasford many years ago in 2015, as a collection of projects that he made. Originally the organization was called "globos.us".
-            Globosus never really materialized and in 2018 Steven tried to make a security devices that allowed for unfettered access to any HID machine terminal.
-            Unfortunately, this endevour was created while Steven was in school and the school (SDSMT) didn't like how all of its security devices were suddenly useless,
-            Steven also made the unfortunate decision to host the code and other information on his school GitLab account. The school then expelled Steven, which also
-            meant the end of the original Globosus endevours.
-        </p>
-        <p>
-            Globosus was a portmanteau of global and us separated by a single unitary circle (o), it is also the brown little spider common to buildings all over the world.
-        </p>
-        <p>
-            glasford.io has superceeded globos.us, and it the official company. 
-        </p>
-
-
-        <h1>How did glasford.io start?</h1>
-        <h2>Part 1: taxes</h2>
-        <p>
-            Steven used to work at Fast Enterprises based in Boston, MA, he enjoyed this work and felt that his work actually affected people's lives
-            in a demonstrable way. He worked on the Audit department. This job however didn't allow Steven to flex a mind more built for engineering
-            solutions to the world's problems.
-        </p>
-        <h2>Part 2: Steven as an Engineer.</h2>
-        <p> 
-            Steven was able to find a different job that, at the beginnging, was mostly engineering focused. At this point he pivoted and got a job at a 
-            blockchain startup based in NY. He also moved to Minneapolis.
-            Steven moved to Minneapolis for multiple reasons, one of the biggest is that it is a very bikable city. Steven and his partner wanted to live somewhere 
-            where they wouldn't need a car in order to live, this would give them the ability to have a family and would free up time for both parents in the event 
-            that we wanted to have children. The children can bike to their friends or to school. Furthermore, the city is very diverse so his children would be
-            less likely to develop racist behaviors and actions that are common in rural parts of America. The list of reasons for Minneapolis are quite long,
-            so I will skip many of the other reasons.
-        </p>
-        <p>
-            During this time Steven created a personal blog originally called "glasford.io". 
-        </p>
-        <h2>Part 3: Collapse of blockchain.</h2>
-        <p>
-            FTX collapsed sometime and Steven realized that blockchain and crypto was an insular bubble with no real innovations. While working at the 
-            blockchain startup Steven increasingly felt that he was just contributing to a larger scam. So Steven made a long term plan.
-        </p>
-        <p>
-            glasford.io originally was a repository for blog posts that Steven made in 2022. At this time Steven was working for a blockchain startup.
-            The startup didn't have any real products and it felt like Steven was always scamming people out of their money. So Steven made a long term plan.
-        </p>
-        <p>
-            After the collapse of FTX the blockchain company removed Steven's engineering duties and his job became useless as the company began to flounder
-            for ideas to stay alive. This upset Steven and he wanted to become an engineer again.
-        </p>
-        <p>
-            It was extremely obvious from an outside observer that blockchain and most crypto currencies largely rely on other businesses of the same sort to generate
-            a sort of bubble of web3, this is appearant due to FTX collapsing and bringing down many other crypto and blockchain firms.
-            The web3 community turned into an echo chamber, the collapse of FTX affected only the web3 community,
-            while not really affecting any other companies.
-        </p>
-        <p>
-            Seeing that FTX collapsed and the insularity of web3 Steven began making moves to remove himself from web3. This led Steven to begin to question his life 
-            and his purpose within the world. He noticed many things the more he began search for actual problems in the world. Things such as hunger, poverty,
-            homelessness, housing affordability, education, ADA compliance, polution, the destruction of natural resources in an effort to create ultra short-term profits.
-        </p>
-        <p>
-            Steven eventually began making plans to solve a few of these by reducing plastic polution by creating a new mechanisms of sale and profit from 3d printed 
-            materials using biodegradable materials.
-        </p>
-        <p>
-            In December 2022, Steven got his first 3d printer (and Ender 3) and began to make plans to grow a print shop in the case that he would be laid off, the
-            original idea didn't have the breadth of ideas, such as 3d printed furniture.
-        </p>
-
-        <h2>Amtrak</h2>
-        <p>
-            Then Steven started to only travel via Amtrak. He made regular commutes from MSP to New York City, which taught him and allowed him to meet many
-            different people. Steven would take different routes often times and on one east-bound route from Chicago to Washington DC he met several representatives
-            from Green Peace. After a long discussion the representative thought the best thing would be to reduce the amount of oil being pumped out of the ground.
-            So Steven began researching more about PLA plastics, which are typcially sourced from American grown corn. It takes about 2kg of raw corn to produce 1kg
-            of PLA plastic, so it is extremly efficient. Many critics often argue about the environmental disadvantages of PLA plastic, such critism are as follows:
-        </p>
-            <ol>
-                <li>The creation of PLA plastic reduces the food supply.</li>
-                <li>Current generation techniques for generating PLA plastic use carbon (such as tractors).</li>
-                <li>PLA takes about 80 years to decompose naturally.</li>
-            </ol>
-        <p>
-            We at glasford.io do not see any problems with the above for the following reasons:
-        </p>
-            <ol>
-                <li>Most corn produced in America goes towards animal feed and ethanol production, PLA plastic will never take as much resources as either of these industries.</li>
-                <li>America is already infested with cars so this is true with every single industry and person in America. We are trying to figure out how to reduce this further.</li>
-                <li>80 years to decompose is significantly faster than the 1000+ years needed to break down most other plastics.</li>
-            </ol>
-        <p>
-            The problems of PLA are often conflated and exagerated by the plastic industry in an effort to sell more polution causing plastic. That is the official
-            stance and opinion of glasford.io. BP and Exxon sell oil so it is in their best interest to cause confusion around a sustainable plastic.
-        <p>
-        <p>
-            The conversation with Green Peace also resulted in many other standard practices at glasford.io. Many other people also provided more ideas, we at 
-            glasford.io thank all others that had converations with Steven over the time. 
-
-        </p>
-
-        <h1>Start</h1>
-        <p>
-            Steven's plans were put into effect on 2-22-2023 when it was announced that Steven would be laid off. This is the official start date of glasford.io.
-        </p>
-
-        <h1>What did Steven come up with?</h1>
-            <h2>Idea</h2>
-        <p>
-            Steven decided to make a Specific Benefit Corporation, that attempts to ensure ADA compliance for the streets of Minneapolis (though our charter specifies 
-            whatever city we move into, so if we expand to Chicago we will do the same mission), regardless of season. 
-            The corporation also attempts to reduce carbon emissions, and tries to make life easier, more comfortable and livable for people living in cities without
-            a car. 
-        </p>
-        <p>
-            The official name of glasford.io is "glasford.io SBC" please note how it is not "inc" or "llc". "SBC" stands for a "Specific Benefit Corporation".
-        </p>
-            <h2>Mission</h2>
-        <p>
-            Our current mission is to ensure people with disabilities are able to use the highly pedestrianized street in Minneapolis called Spruce Place. 
-            We do this both manually and politically. We ensure that ice dams are broken to prevent standing water at intersections. We plow the street sidewalks to
-            allow for wider sidewalks for better and safer mobility of those in scooters and walkers and those who use sign language.
-            We are also in stages of making proposals and designs to change Spruce Place in an effort to widen the sidewalks and ensure buses are better able to traverse
-            the narrow street. We are planning on removing a lane of street parking to accomplish this. Our initial designs also allow for more street parking while
-            allowing for safer and slower street design and a widened sidewalk. More designs will be created once we soon.
-        </p>
-        <p>
-            Our other mission of decarbonization is as follows and is much more verbose and is the method our organization makes the most of its money.
-            We create 3d printed furniture using PLA plastic that is sourced from Minnesota. This local sourcement allows for less transportation carbon.
-            The PLA plastic reduces our dependence on oil.
-        </p>
-        <p>
-            We are able to recycle entire printed pieces which allows us to further reduce our use of virgin materials. 
-        </p>
-        <h1>Current State</h1>
-        <p>
-            Currently, we are in the process of creating "standard" models. These models are currently held secretly under advice from our lawyers. But once printing 
-            starts in April we will charge $666 for each standard printed item (Selling of the models is also an option). 
-        </p>
-        <p>
-            In accordance with our committments to those with disabilites all chairs are custom printed in accordance with the person's real dimensions. 
-            This will allow for a "perfect" chair for anyone regardless of weight, height, or age.
-        </p>
-        <p>
-            Once a person buys a model and it is printed, the print will be marked as ready and only low carbon methods will be used to deliver the products.
-            Currently this means we literally ship the product and its pieces by e-bicycle within the Twin Cities area, furthermore, the bicycles are charged using 100%
-            renewable power. We do not ship outside of the Twin Cities area to prevent excessive carbon being emitted. We currently do not recommend driving to pick up
-            your product as this is highly carbon intensive, but we cannot stop people from doing this. Our headquarters in Minneapolis does not have parking, this is
-            on purpose. In the event that parking minimums are instituted in Minneapolis again (they were removed in 2014), we will conduct all deliveries via bicycle.
-            And our headquarters will become off limits to the public. glasford.io will do all in its power to prevent the creation of another parking space,
-            even if this means our dissolution.
-        </p>
-        <p>
-            If a person's body changes in any way, we will happy destroy your model and reprint it for $69. This is great for those who gain weight,
-            loose weight, shrink, grow, or anything. We are committed to keeping our ADA compliance and allowing people to reprint their models to better fit their 
-            bodies as time passes. This is great for example, for children as well, who obviously grow as they age. Through our unique manufacturing methods a chair can 
-            or table or anything else can grow with your child.
-        </p>
-        <p>
-            We are still very much in stage 1 of our growth.
-        </p>
-
-        <h1>Future</h1>
-        <p>
-            We hope to increase the widths of the street sidewalks in Minneapolis, we also hope to expand to the markets in Chicago, New York, and perhaps Denver.
-        </p>
-        <p>
-            We here at glasford.io believe the future is near, and we are taking steps to ensure the future is the best for the future generations.
-        </p>
-        <p>
-            <b>Please stay tuned, we are just getting started.</b>
-        </p> -->
-    </body>
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", fileName);
+            document.body.appendChild(link);
+            link.click();
+        }
+    </script>
+</body>
 </html>
-
-<br />
-<br />
-<p>&copy; 2023 glasford.io SBC</p>

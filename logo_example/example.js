@@ -2,21 +2,23 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const qrCode = document.getElementById('qr-code');
-    const logoText = document.getElementById('logo-text');
+    const gReplacement = document.getElementById('g-replacement');
+
+    // Initial delay to simulate loading time
+    const initialDelay = 5000; // 5 seconds
 
     setTimeout(() => {
-        // Start QR code animation
-        qrCode.style.opacity = '1';
-        
-        // Animate and remove logo text
-        logoText.style.opacity = '0';
-        setTimeout(() => {
-            logoText.style.display = 'none';
-        }, 5000); // same duration as the transition in CSS
+        // Replace 'G' with QR code after initial delay
+        gReplacement.classList.add('hidden');
+        qrCode.classList.remove('hidden');
 
-        // Expand QR code
+        // Additional delay for QR code appearance
+        const qrAppearanceDelay = 2000; // 2 seconds
+
         setTimeout(() => {
-            qrCode.style.transform = 'scale(2)'; // Adjust scaling as needed
-        }, 5000);
-    }, 1000); // Delay before animation starts
+            // Move and grow QR code after it appears
+            qrCode.classList.add('moved');
+        }, qrAppearanceDelay);
+
+    }, initialDelay);
 });

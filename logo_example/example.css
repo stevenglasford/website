@@ -1,26 +1,39 @@
-.logo-container {
-    /* Container styles (adjust as needed) */
+/* style.css */
+
+body, html {
+    height: 100%;
+    margin: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+}
+
+.logo-container {
+    position: relative;
+    display: inline-block;
 }
 
 #logo-text {
-    /* Style for the text (adjust as needed) */
     font-size: 24px; /* Adjust as needed */
 }
 
-.qr-code {
-    /* Style for the QR code image */
-    width: 24px; /* Adjust to match the size of the letter it's replacing */
-    height: auto;
-    display: block;
+#qr-code {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px; /* Initial size of QR code */
+    height: 30px;
+    opacity: 0;
+    transition: transform 2s, opacity 2s, top 2s, left 2s;
 }
 
-#g-replacement {
-    /* Hide the original letter G */
-    display: inline-block;
-    overflow: hidden;
-    width: 24px; /* Match the width of your QR code image */
-    height: 24px; /* Match the height of your QR code image */
+#qr-code.moved {
+    transform: scale(3); /* Adjust scaling */
+    top: -100px; /* Moves to upper right corner */
+    left: 100px; /* Adjust positioning as needed */
+    opacity: 1;
+}
+
+.hidden {
+    display: none;
 }
